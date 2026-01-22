@@ -2,178 +2,383 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Permission Protocol — Request Access</title>
+  <title>Permission Protocol — Authority Layer for Autonomous AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Permission Protocol defines the authority and audit layer that governs whether autonomous AI systems are allowed to take real-world actions." />
+  <meta name="description" content="Permission Protocol is the authority and audit layer that decides whether autonomous AI is allowed to act. Every irreversible action must be explicitly permitted, policy-checked, and recorded." />
 
   <!-- Favicon -->
   <link rel="icon" href="/assets/favicon.ico" />
 
-  <!-- SEO -->
+  <!-- Canonical -->
   <link rel="canonical" href="https://permissionprotocol.com" />
-  <meta property="og:title" content="Permission Protocol — Request Access" />
-  <meta property="og:description" content="The authority and audit layer that governs whether autonomous AI is allowed to act." />
+
+  <!-- OpenGraph -->
+  <meta property="og:title" content="Permission Protocol" />
+  <meta property="og:description" content="The authority and audit layer that decides whether autonomous AI is allowed to act." />
   <meta property="og:type" content="website" />
 
   <style>
-    :root {
-      --bg: #0A0C10;
-      --panel: #11131A;
-      --border: rgba(255,255,255,0.08);
-      --text: #FFFFFF;
-      --muted: rgba(255,255,255,0.72);
-      --accent: #14B8A6;
-      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    :root{
+      --bg:#0A0C10;
+      --panel:#0F131B;
+      --panel2:#0C1017;
+      --text:#F6F7FB;
+      --muted:rgba(246,247,251,.72);
+      --muted2:rgba(246,247,251,.55);
+      --line:rgba(255,255,255,.08);
+      --shadow: 0 18px 50px rgba(0,0,0,.55);
+      --radius: 22px;
+
+      --purple:#7C3AED;
+      --teal:#14B8A6;
+      --cyan:#22D3EE;
+
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: var(--sans);
-      background: radial-gradient(
-        circle at top center,
-        rgba(124,58,237,0.08),
-        transparent 60%
-      ), var(--bg);
-      color: var(--text);
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 15% 0%, rgba(124,58,237,.22), transparent 60%),
+        radial-gradient(900px 520px at 85% 10%, rgba(20,184,166,.16), transparent 58%),
+        radial-gradient(900px 520px at 55% 95%, rgba(34,211,238,.10), transparent 62%),
+        var(--bg);
+      overflow-x:hidden;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(1120px, calc(100% - 40px)); margin:0 auto; }
 
-    .container {
-      max-width: 920px;
-      padding: 0 24px;
-      margin: 0 auto;
+    /* Top bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(10px);
+      background: rgba(10,12,16,.55);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 0;
     }
 
-    header {
-      padding: 96px 0 72px;
-      text-align: center;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .brand img{ height:28px; width:auto; display:block; }
+
+    .nav{
+      display:flex;
+      gap:16px;
+      color:var(--muted2);
+      font-size:14px;
+    }
+    .nav a:hover{ color:var(--text); }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
     }
 
-    .logo {
-      height: 54px;
-      width: auto;
-      margin: 0 auto 24px;
-      display: block;
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color:var(--text);
+      font-weight:700;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .btn-primary{
+      border:none;
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(20,184,166,.92));
+      color:#071014;
+      box-shadow: 0 18px 40px rgba(124,58,237,.18);
+    }
+    .btn-primary:hover{ filter:saturate(1.05); }
+
+    /* Hero */
+    header{ padding:70px 0 28px; }
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .nav{ display:none; }
     }
 
-    h1 {
-      font-size: clamp(34px, 4vw, 48px);
-      line-height: 1.15;
-      margin: 0 0 12px;
-      letter-spacing: -0.5px;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      padding:8px 12px;
+      border-radius:999px;
+      color:var(--muted2);
+      font-size:13px;
+      margin-bottom:14px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--teal);
+      box-shadow: 0 0 0 6px rgba(20,184,166,.12);
     }
 
-    .subtitle {
-      font-size: 16px;
-      font-style: italic;
-      color: var(--muted);
-      margin-bottom: 32px;
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height:1.05;
+      letter-spacing:-0.8px;
     }
 
-    .description {
-      font-size: 16px;
-      line-height: 1.65;
-      color: var(--muted);
-      max-width: 720px;
-      margin: 0 auto 48px;
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      font-size: clamp(15px, 1.9vw, 18px);
+      line-height:1.55;
+      max-width: 70ch;
     }
 
-    .cta {
-      display: inline-block;
-      padding: 14px 26px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      font-weight: 600;
-      background: transparent;
-      transition: border-color 0.2s ease, color 0.2s ease;
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .card-pad{ padding:18px; }
+
+    .stat{
+      display:flex;
+      gap:14px;
+      justify-content:space-between;
+      align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(15,19,27,.62);
+      margin-bottom:12px;
+    }
+    .stat b{ display:block; font-size:14px; }
+    .stat span{ display:block; margin-top:6px; color:var(--muted2); font-size:13px; line-height:1.35; }
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: rgba(246,247,251,.9);
+      white-space:nowrap;
     }
 
-    .cta:hover {
-      border-color: var(--accent);
-      color: var(--accent);
+    /* Sections */
+    section{ padding:44px 0; border-top:1px solid var(--line); }
+    h2{
+      margin:0 0 10px;
+      font-size: clamp(22px, 2.3vw, 30px);
+      letter-spacing:-0.4px;
+    }
+    .desc{ margin:0 0 18px; color:var(--muted); line-height:1.65; max-width: 78ch; }
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 980px){ .grid3{ grid-template-columns:1fr; } }
+
+    .feature{
+      padding:18px;
+      showdow: none;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(12,16,23,.55);
+    }
+    .feature h3{ margin:0 0 8px; font-size:16px; }
+    .feature p{ margin:0; color:var(--muted2); line-height:1.55; font-size:14px; }
+
+    /* Footer */
+    footer{
+      padding:38px 0 48px;
+      border-top:1px solid var(--line);
+      color: rgba(246,247,251,.6);
+      font-size:12px;
+      text-align:center;
     }
 
-    section {
-      padding: 72px 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-
-    h2 {
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    footer {
-      padding: 40px 0;
-      text-align: center;
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      border-top: 1px solid var(--border);
-    }
+    /* Scroll anchors offset for sticky topbar */
+    .anchor{ scroll-margin-top: 84px; }
   </style>
 </head>
 
 <body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top">
+        <img src="/assets/logo-dark.png" alt="Permission Protocol" />
+      </a>
 
-<header>
-  <div class="container">
-    <img
-      src="/assets/logo-dark.png"
-      alt="Permission Protocol"
-      class="logo"
-    />
+      <nav class="nav">
+        <a href="#problem">Problem</a>
+        <a href="#defines">What it defines</a>
+        <a href="#reference">Reference implementation</a>
+      </nav>
 
-    <h1>Request Access to the Permission Protocol</h1>
-
-    <div class="subtitle">
-      For teams running autonomous AI in production.
+      <div class="actions">
+        <a class="btn" href="#defines">Read the Protocol</a>
+        <a class="btn btn-primary" href="https://kickofflabs.com/waitlist/f210b46c">Request Access</a>
+      </div>
     </div>
-
-    <p class="description">
-      <strong>Permission Protocol</strong> defines the authority and audit layer that governs
-      whether autonomous AI systems are allowed to take real-world actions.
-      It enforces policy-first execution, requires explicit human approval for
-      irreversible actions, and produces immutable audit receipts for accountability.
-      We maintain a reference implementation for teams operating autonomous AI in production.
-    </p>
-
-    <a
-      href="https://kickofflabs.com/waitlist/f210b46c"
-      class="cta"
-      target="_self"
-    >
-      Request Access
-    </a>
   </div>
-</header>
 
-<section>
-  <div class="container">
-    <h2>Reference Implementation</h2>
+  <main id="top">
+    <header>
+      <div class="container hero">
+        <div>
+          <div class="pill">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Protocol • Authority • Audit</span>
+          </div>
 
-    <p class="description">
-      Access to the Permission Protocol reference implementation is granted selectively.
-      Requests are reviewed to ensure alignment with operational scope, risk profile,
-      and intended use.
-    </p>
+          <h1>Permission Protocol</h1>
+          <p class="sub">
+            The authority and audit layer that decides whether autonomous AI is allowed to act.
+            Every irreversible AI action must be explicitly permitted, policy-checked, and recorded.
+          </p>
 
-    <a
-      href="https://kickofflabs.com/waitlist/f210b46c"
-      class="cta"
-      target="_self"
-    >
-      Request Access
-    </a>
-  </div>
-</section>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#defines">Read the Protocol</a>
+            <a class="btn" href="https://kickofflabs.com/waitlist/f210b46c">Request Access</a>
+          </div>
+        </div>
 
-<footer>
-  © 2026 Permission Protocol. Built for infrastructure teams.
-</footer>
+        <aside class="card card-pad">
+          <div class="stat">
+            <div>
+              <b>Mandatory permission before execution</b>
+              <span>AI doesn’t act directly. Actions are requested, evaluated, and permitted (or denied).</span>
+            </div>
+            <div class="tag">fail-closed</div>
+          </div>
 
+          <div class="stat">
+            <div>
+              <b>Human authority of record</b>
+              <span>Irreversible actions require explicit approval with a named accountable actor.</span>
+            </div>
+            <div class="tag">approvals</div>
+          </div>
+
+          <div class="stat" style="margin-bottom:0;">
+            <div>
+              <b>Verifiable audit receipts</b>
+              <span>Every decision produces immutable, company-scoped audit artifacts.</span>
+            </div>
+            <div class="tag">receipts</div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <section id="problem" class="anchor">
+      <div class="container">
+        <h2>The Problem</h2>
+        <p class="desc">
+          AI systems can now deploy code, move money, mutate data, and call external APIs.
+          But there is no standard way to answer one critical question:
+          <b>who authorized this AI action — and under what policy?</b>
+        </p>
+
+        <div class="grid3">
+          <div class="feature">
+            <h3>Silent autonomy</h3>
+            <p>Actions execute without explicit authority or accountable approvals.</p>
+          </div>
+          <div class="feature">
+            <h3>Retroactive logging</h3>
+            <p>Logs after the fact don’t prevent damage or satisfy auditors.</p>
+          </div>
+          <div class="feature">
+            <h3>Undefined liability</h3>
+            <p>When AI acts, responsibility becomes ambiguous — legally and operationally.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="defines" class="anchor">
+      <div class="container">
+        <h2>What Permission Protocol Defines</h2>
+        <p class="desc">
+          Permission Protocol is a control-plane standard for autonomous systems.
+          It defines how AI requests permission, how policies are enforced,
+          and how actions are approved and audited.
+        </p>
+
+        <div class="grid3">
+          <div class="feature">
+            <h3>Execution Requests</h3>
+            <p>Agents submit structured requests describing intent and inputs. Direct execution is blocked.</p>
+          </div>
+          <div class="feature">
+            <h3>Policy Supremacy</h3>
+            <p>Policies override intelligence. Scope, spend, time windows, and environment locks are enforced.</p>
+          </div>
+          <div class="feature">
+            <h3>Receipts & Audit</h3>
+            <p>Every action yields a verifiable permission receipt for incident response and compliance.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reference" class="anchor">
+      <div class="container">
+        <h2>Reference Implementation</h2>
+        <p class="desc">
+          Access to the Permission Protocol reference implementation is granted selectively.
+          Requests are reviewed to ensure alignment with operational scope, risk profile, and intended use.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://kickofflabs.com/waitlist/f210b46c">Request Access</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Permission Protocol. Built for infrastructure teams.
+    </footer>
+  </main>
 </body>
 </html>
