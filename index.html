@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Permission Protocol — AI Action Authority</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Permission Protocol is the authority and audit layer that decides whether autonomous AI is allowed to act." />
+
+  <meta property="og:title" content="Permission Protocol" />
+  <meta property="og:description" content="The authority layer that decides whether AI is allowed to act." />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --panel: #11131a;
+      --border: #1f2230;
+      --text: #e8ebf5;
+      --muted: #a6accd;
+      --accent: #8b5cf6;
+      --accent2: #22d3ee;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(900px 500px at 20% 0%, #1a1335, transparent),
+                  radial-gradient(700px 500px at 80% 10%, #0e2a33, transparent),
+                  var(--bg);
+      color: var(--text);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1100px;
+      padding: 0 24px;
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 96px 0 64px;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.05;
+      margin: 0 0 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    .cta {
+      margin-top: 28px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      color: #000;
+    }
+
+    section {
+      padding: 72px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 720px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 36px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    pre {
+      background: #05060a;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 24px;
+    }
+
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container">
+    <div class="pill">Protocol • Authority • Audit</div>
+
+    <h1>Permission Protocol</h1>
+
+    <p class="subtitle">
+      The authority and audit layer that decides whether autonomous AI is allowed to act.
+      Every irreversible AI action must be explicitly permitted, policy-checked, and recorded.
+    </p>
+
+    <div class="cta">
+      <a href="#spec" class="btn primary">Read the Protocol</a>
+      <a href="#access" class="btn">Request Access</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <h2>The Problem</h2>
+    <p>
+      AI systems can now deploy code, move money, mutate data, and call external APIs.
+      But there is no standard way to answer one critical question:
+      <strong>who authorized this AI action — and under what policy?</strong>
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Silent Autonomy</h3>
+        <p>Most AI systems execute actions without explicit authority or human accountability.</p>
+      </div>
+      <div class="card">
+        <h3>Retroactive Logging</h3>
+        <p>Logs after the fact don’t prevent damage or satisfy regulators.</p>
+      </div>
+      <div class="card">
+        <h3>Undefined Liability</h3>
+        <p>When AI acts, responsibility is unclear — legally and operationally.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>What Permission Protocol Defines</h2>
+    <p>
+      Permission Protocol is a control-plane standard for autonomous systems.
+      It defines how AI requests permission, how policies are enforced,
+      and how actions are approved and audited.
+    </p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Execution Requests</h3>
+        <p>AI cannot act directly. It must request permission.</p>
+      </div>
+      <div class="card">
+        <h3>Policy Supremacy</h3>
+        <p>Policies override intelligence. Always.</p>
+      </div>
+      <div class="card">
+        <h3>Human Authority</h3>
+        <p>Irreversible actions require named, recorded approval.</p>
+      </div>
+      <div class="card">
+        <h3>Immutable Receipts</h3>
+        <p>Every decision produces a verifiable audit artifact.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spec">
+  <div class="container">
+    <h2>PP-001: Action Authorization & Audit</h2>
+    <p>
+      The first specification of Permission Protocol defines the minimum requirements
+      for AI action authorization and forensic auditability.
+    </p>
+
+<pre>{
+  "action": "deploy.production",
+  "requestedBy": "ai-agent-001",
+  "policyResult": "requires-approval",
+  "approvedBy": "human-cto",
+  "timestamp": "2026-01-22T20:41:09Z",
+  "receiptHash": "0x91acff..."
+}</pre>
+  </div>
+</section>
+
+<section id="access">
+  <div class="container">
+    <h2>Reference Implementation</h2>
+    <p>
+      We maintain a reference implementation of Permission Protocol for teams
+      running autonomous systems in production.
+    </p>
+
+    <p>
+      If your AI touches money, production infrastructure, or irreversible data,
+      you should not be operating without an authority layer.
+    </p>
+
+    <div class="cta">
+      <a class="btn primary">Request Access</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Permission Protocol • © 2026<br />
+    The rule AI must follow before acting.
+  </div>
+</footer>
+
+</body>
+</html>
