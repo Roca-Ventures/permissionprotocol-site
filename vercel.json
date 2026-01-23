@@ -2,7 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/signin", "destination": "/signin.html", "permanent": false }
+    {
+      "source": "/signin",
+      "destination": "https://company-os-web.onrender.com/",
+      "permanent": false
+    }
   ]
 }
+
 
