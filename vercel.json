@@ -1,4 +1,8 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/signin", "destination": "/signin.html", "permanent": false }
+  ]
 }
+
