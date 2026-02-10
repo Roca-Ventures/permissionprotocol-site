@@ -60,15 +60,31 @@
 
     .logo {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 15px;
       display: flex;
       align-items: center;
       gap: 10px;
+      letter-spacing: -0.3px;
     }
 
     .logo img {
       height: 24px;
-      width: auto;
+      width: 24px;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    .logo-text {
+      display: flex;
+      gap: 6px;
+    }
+
+    .logo-text .permission {
+      color: var(--text);
+    }
+
+    .logo-text .protocol {
+      color: #2dd4bf;
     }
 
     .header-links {
@@ -288,6 +304,7 @@
     <div class="container header-inner">
       <a class="logo" href="/">
         <img src="/assets/logo-dark.png" alt="Permission Protocol" />
+        <span class="logo-text"><span class="permission">Permission</span><span class="protocol">Protocol</span></span>
       </a>
       <div class="header-links">
         <a class="btn-access" href="https://kickofflabs.com/waitlist/f210b46c">Request Access</a>
